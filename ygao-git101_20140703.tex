@@ -1,0 +1,363 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{nips13submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
+
+%ygao
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{cite}
+\usepackage{natbib}
+\definecolor{Gray}{gray}{0.9}
+\usepackage{listings}
+\lstset{language=sh,basicstyle=\ttfamily}
+%\lstset{breaklines=true,columns=flexible}
+
+\newcommand{\q}[1]{``#1''}
+
+\title{{Git 101 for single person and team}}
+
+\author{
+Yang Gao\\
+July 3, 2014\\
+\texttt{yanggao1119@gmail.com} \\
+}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+\maketitle
+
+\section{Forerunner}
+I have always wanted a git tutorial for beginners, that covers just the basics for single person and team. I found the official \q{GitHub Help} too simple, and many other tutorials too complicated. So I compiled my own.
+
+\section{Basics}
+
+\subsection{What is git}
+
+See this plain intro\footnote{http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1\#awesm=~opzx0XktDVGJmx}.
+
+The most essential concept in git is \textbf{branching}. Forking is a special branching between different repo owners. This is the git principle:  \textbf{\q{Anything in the master branch is always deployable}}.
+
+\subsection{Why git}
+\begin{itemize}
+	\item Version control with branching
+	\item Group collaboration with forking and branching
+	\item Sharing files, group wiki, etc.
+\end{itemize}
+
+\subsection{Suggested practice}
+
+\begin{itemize}
+	\item Always use command line in a terminal: you'll need to type a lot of \q{git} in your terminal;
+	\item Always do your dev in a new branch so that you don't mess up your stable master branch with crazy changes;
+	\item Commit your changes as often as possible, and always attach a clear description of change. When you don't remember what change you have made or cannot describe it in one sentence, you have done too much without committing;
+	\item After committing, alway do a \q{push} so that your branch at the GitHub server is also updated. This saves lots of tears when your laptop is stolen or disk is wiped clean;
+	\item Therefore: \textbf{branch - edit - commit - push}. If you collaborate with others on their repo, \textbf{fork - branch - edit - commit - push - send pull request};
+\end{itemize}
+
+\section{Preparation}
+
+\begin{itemize}
+	\item Download git, install it;
+	\item There may be a graphic UI to config your username and user email, or you can do it via command line:
+
+\begin{lstlisting}
+	$ git config --global user.name "Your Name Comes Here"
+	$ git config --global user.email you@yourdomain.example.com
+\end{lstlisting}
+
+\end{itemize}
+
+\section{Basic usage: set up local/remote repo w/o branching or forking}
+
+First, cd to the regular, local directory that you intend to turn into a git repository. Let's say the directory is called \q{toydir}.
+
+\begin{lstlisting}
+$ git init
+\end{lstlisting}
+
+This turns toydir into a git repository(repo for short). Only after this can you do other git operations for toydir. To know what happened exactly, run this command \q{ls -la}, you can see a new \q{.git} sub-directory added to your directory. That is to say, if you remove .git by \q{rm -r}, git will not recognize toydir as a git repository.
+
+\begin{lstlisting}
+$ git help
+\end{lstlisting}
+
+For simple help or reminder; if it gets complex, do a google search;
+
+\begin{lstlisting}
+$ git status
+\end{lstlisting}
+
+Check status of the repo. For example, untracked/uncached files that you can consider adding to track/cache(only tracked files will be part of the git repository by your commit action); recently tracked/cached files, etc.
+
+\begin{lstlisting}
+$ git add $FILENAME
+\end{lstlisting}
+
+Git add is used both for new and newly modified files, and in both cases it takes a snapshot of the given files and stages that content in the index, ready for inclusion in the next commit. We then say the files are tracked/cached. Specifically, you need \q{git add} to:
+
+\begin{itemize}
+	\item Notify git to track/cache new files. All files have to be tracked/cached before you can commit them to repository. Note that the physical presence of a file in the directory != presence of a file in git repository.
+
+	\item Notify git of the content update of already tracked/cached files. Suppose \q{file1.txt} is tracked, if you edit the file, you still need to do \q{git add file1.txt}, otherwise you won't have updated file1.txt in your repo. If you have just modified already tracked/cached files, you can use \q{git commit -a} which does \q{git add} and \q{git commit} in one step. In fact, I always do 'git commit -a -m \q{\$UPDATE\_MESSAGE} ', where \$UPDATE\_MESSAGE is message about the change, wrapped up in double quotes so that -m takes it as a whole. However, if you added new files to track/cache, you have to do both \q{git add} and \q{git commit}.
+
+\end{itemize}
+
+Note that if you have a directory full of files and want to add them all to track/cache, you can just do \q{git add .} where dot represents everything recursively from the current directory, unless you have set .gitignore to ignore some file patterns;
+
+\begin{lstlisting}
+$ git rm --cached $FILENAME
+\end{lstlisting}
+
+To remove file or a list of files from git cache so that it won't be in the git repo if you do the next commit. Again recall that local directory != git repository. Removing a file in directory != removing it from git cache: you need to also do \q{git rm} to completely get rid of it. Similarly, you can \q{git rm} while keeping the file around in the linux directory.
+
+\begin{lstlisting}
+$ git commit -a -m "$UPDATE_MESSAGE"
+\end{lstlisting}
+
+After making changes to the directory (editing files, tracking\&untracking files, etc), you need to commit the changes so that they are saved in your repository with a version number.
+
+\textbf{Always make sure that you have added new files to track/cache before you commit}. Do \q{git add} very often, do \q{git commit} very often. This is even more important when you do branching or forking.
+
+\begin{lstlisting}
+$ git remote add origin $GIT_OR_HTTPS_URL
+\end{lstlisting}
+
+You need to push your local repo to the \q{remote} at the GitHub server so that you have your updates on the cloud and no worries for computer failure. To do the push, you need to have the remote \textbf{beforehand} for the corresponding local repo. For instance, if I'd like to push toydir to GitHub server, I need to:
+
+\begin{itemize}
+	\item Open browser, log into GitHub, click the \q{Repositories} tab and create a new repository, preferrably the same name as the local directory, therefore toydir.
+	\item On linux terminal, cd to toydir, and do:
+	
+\begin{lstlisting}
+$ git remote add origin https://github.com/yanggao1119/toydir.git
+\end{lstlisting}
+	
+	This connects local repo toydir to the remote repo in GitHub server, which is by default called \q{origin}.
+\end{itemize}
+
+\begin{lstlisting}
+$ git push $REMOTENAME $BRANCHNAME
+\end{lstlisting}
+
+Now, you can push to the remote at the GitHub server. You will be prompted with your GitHub username and password. I believe you can also set it once for all. Tell me how and I will update this tutorial.
+
+You can do: \q{git push origin master}, which pushes your master branch on the local repo toydir to the master branch of the origin remote repo on the GitHub server. Master has to do with branching, and origin has to do with forking, to be talked below.
+
+If you just do \q{git push}, git will push all branches to the origin repo(Yang: actually, I am not very sure). Since currently you have no branching or forking, \q{git push} is the same as \q{git push origin master}.
+
+
+\section{Managing branches}
+
+Whether you are collaborating with others, it is always a good practice to have your stable version at the master branch, check out a temporary branch to work on so that if you mess up with the temporary branch, your master branch is safe; When you are done with the temporary branch, you can merge it back to your master branch.
+
+Since you have not branched out, you only have the master branch:
+
+\begin{lstlisting}
+$ git branch
+* master
+\end{lstlisting}
+
+To add a branch called \q{experimental}, and then run \q{git branch} to check:
+
+\begin{lstlisting}
+$ git branch experimental
+$ git branch
+  experimental
+* master
+\end{lstlisting}
+
+The * is placed at master, meaning that your current branch is still the master branch
+
+To switch to the experimental branch, run:
+
+\begin{lstlisting}
+$ git checkout experimental
+\end{lstlisting}
+
+\textbf{Please check the \q{Managing branches} section in git-scm.com/docs/gittutorial} . It has a clear explanation on how to work with branches.
+
+Notes:
+
+\begin{itemize}
+	\item \textbf{Before \q{git merge}, make sure the two branches to merge have both committed updates}.
+
+	\item If two branches have changed the same part of the same file, there will be failure in automatic merging. Suppose you are at the master branch, you'd like to merge with the experimental branch but both branch edited the same line of \q{file1}:
+
+\begin{lstlisting}
+$ git merge experimental
+Auto-merging file1
+CONFLICT (content): Merge conflict in file1
+Automatic merge failed; fix conflicts and then commit the result
+\end{lstlisting}
+
+\textbf{You need to resolve the conflict since this is beyond git's understanding}. One way to do it is to open the file in conflict with your text editor and resolve the conflict manually. You will see conflict-marked area begins with \textless\textless\textless\textless\textless\textless\textless~and ends with~\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater. These are also known as the conflict markers. The two conflicting blocks themselves are divided by a =======. Just keep what you want, then commit to finish resolving the conflict. You don't need to do \q{git merge} again. 
+
+	\item \q{git merge} will only change the current branch, not the branch to be merged with. Therefore, if you are at the master branch, running \q{git merge experimental} will only update master.
+
+\end{itemize}
+
+\section{Using Git for collaboration: forking a repo}
+
+\textbf{The GitHub Help tutorial is clear and short, see here: https://help.github.com/articles/fork-a-repo} . Just follow it. 
+
+Here is an example. If longwencan forked yanggao1119's toydir repo and cloned it to her local directory, longwencan can cd to the local repo directory and confirm with:
+
+\begin{lstlisting}
+$ git remote -v
+origin  https://github.com/longwencan/toydir.git (fetch)
+origin  https://github.com/longwencan/toydir.git (push)
+\end{lstlisting}
+
+Note that the origin points to her own repo, not yanggao1119's repo where longwencan forked from. To track yanggao1119's repo updates, longwencan can add a remote called \q{upstream} pointing to yanggao1119's repo:
+
+\begin{lstlisting}
+$ git remote add upstream https://github.com/yanggao1119/toydir.git
+\end{lstlisting}
+
+After this change, longwencan has these remotes:
+
+\begin{lstlisting}
+$ git remote -v
+origin  https://github.com/longwencan/toydir.git (fetch)
+origin  https://github.com/longwencan/toydir.git (push)
+upstream    https://github.com/yanggao1119/toydir.git (fetch)
+upstream    https://github.com/yanggao1119/toydir.git (push)
+\end{lstlisting}
+
+For longwencan to perform an update with the upstream in case yanggao1119 update repo:
+
+\begin{lstlisting}
+$ git fetch upstream
+From https://github.com/yanggao1119/toydir
+ * [new branch]      experimental -> upstream/experimental
+ * [new branch]      master     -> upstream/master
+\end{lstlisting}
+
+For longwencan to merge her master branch with the master branch of yanggao1119's repo:
+
+\begin{lstlisting}
+$ git checkout master
+# Switched to branch 'master'
+$ git merge upstream/master
+\end{lstlisting}
+
+\textbf{Merging between branches of different repos is similar to merging between branches within a repo}, which we discussed in the previous section.
+
+However, \textbf{it is better to checkout a new branch to work on}. So longwencan creates a new branch called \q{edit1} and switches to that branch.
+
+\begin{lstlisting}
+$ git checkout -b edit1
+\end{lstlisting}
+
+After editing, adding and committing, longwencan can push to origin, which is her remote at the GitHub server:
+
+\begin{lstlisting}
+$ git push origin edit1
+\end{lstlisting}
+
+After the push, longwencan wants yanggao1119 to update as well. Therefore longwencan logs in github website, select the \q{edit1} branch, and click at the green button for \q{Pull Request}, and writes this message to yanggao1119: \q{I have updated file1 and added file7, blahblah}. 
+
+When yanggao1119 logs into GitHub website, she can see 1 Pull Request on the right pane. It is yanggao1119's turn to merge the pull request. 
+
+\textbf{To be safe, we'll always do merging via command line}. So yanggao1119 selects \q{command line} in the pull request and follow the instruction commands, which is like this:
+
+\begin{itemize}
+
+	\item Step 1: From your project repository, check out a new branch and test the changes.
+
+\begin{lstlisting}
+$ git checkout -b longwencan-edit1 master
+\end{lstlisting}
+
+This creates a temporary branch called longwencan-edit1, and switches to it.
+
+\begin{lstlisting}
+$ git pull https://github.com/longwencan/toydir.git edit1
+\end{lstlisting}
+
+This pulls updates from the edit1 branch in longwencan's repo toydir.git, which is exactly the branch that sends yanggao1119 the pull request. There may be conflicts, since longwencan-edit1 by creation is a copy of the yanggao1119's master branch. Resolve the conflicts manually as mentioned above, and then commit to finalize.
+
+
+	\item Step 2: Merge the changes and update on GitHub.
+
+\begin{lstlisting}
+$ git checkout master
+$ git merge --no-ff longwencan-edit1
+\end{lstlisting}
+
+Note that since we already resolved conflicts in longwencan-edit1, we can \textbf{just merge longwencan-edit1 back into master with --no-ff}. In this sense, longwencan-edit1 is a \textbf{bridge\&buffer}. You can delete longwencan-edit1 after this merge.
+
+\begin{lstlisting}
+$ git push origin master
+\end{lstlisting}
+This updates to yanggao1119's remote repo on GitHub server.
+
+\end{itemize}
+
+
+\section{Special issues}
+
+\subsection{Wildcard}
+
+Git supports wildcard, i.e., the * char, which saves your time/effort. Suppose you'd like to add files \q{file1.txt} and \q{file2.txt} to track/cache, you can do:
+
+\begin{lstlisting}
+$ git add file1.txt file2.txt
+\end{lstlisting}
+
+If you later find that you don't want to cache them, you can do:
+
+\begin{lstlisting}
+$ git rm --cached file1.txt file2.txt
+\end{lstlisting}
+
+With wildcard you can simply do:
+
+\begin{lstlisting}
+$ git add *.txt
+$ git rm --cached *.txt
+\end{lstlisting}
+
+Note that \textbf{git wildcard is recursive by default, different from linux wildcard}. That is to say, \q{git add *} recursively add all files/directories into cache, and \q{git add '*.txt'} recursively add all .txt files into cache.
+
+\subsection{Protocol}
+
+Sometimes you will have problem with the protocol you are using. For example, when you use VPN and run these:
+
+\begin{lstlisting}
+$ git remote add origin git@github.com:yanggao1119/toydir2.git
+$ git push origin master
+\end{lstlisting}
+
+You may get this error: \q{Permission denied (publickey)}. You can try to remove the old origin, and then use HTTPS to try push:
+
+\begin{lstlisting}
+$ git remote rm origin
+$ git remote -v 
+# to check if you have removed the old origin with the git protocol
+$ git remote add origin https://github.com/yanggao1119/toydir2.git
+$ git push origin master  
+\end{lstlisting}
+
+\textbf{I guess it is always better to use HTTPS, need to confirm}.
+
+\section{Problems\&suggetions}
+Contact Yang Gao via yanggao1119@gmail.com.
+
+\section{References}
+
+\begin{enumerate}
+\item http://code.tutsplus.com/articles/team-collaboration-with-github--net-29876
+\item http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1\#awesm=~opzx0XktDVGJmx
+\item https://help.github.com/articles/fork-a-repo
+\item git-scm.com/docs/gittutorial
+\end{enumerate}
+
+
+\end{document}
