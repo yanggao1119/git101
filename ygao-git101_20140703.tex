@@ -360,6 +360,22 @@ $ git push
 
 so that yanggao1119 can see the update.
 
+Two things to remember for yourself and for your collaborator:
+
+\begin{itemize}
+\item Always do your code dev on a new branch\footnote{you can hear some people referring to it as \q{feature} } instead of your master branch. This translates to using \q{git checkout -b \$FEATURE\_NAME} very often. When you are happy about dev, checkout master, merge with your dev branch and then push;
+\item When doing dev on your new branch, do as many commits as possible, as I said before. However, if you simply do a merge and push, your collaborators would see too many edits that don't make sense to them, such as adding or deleting a small variable. To be considerate, do a \q{squash} when you merge, and then commit with a more substantial message. That is to say:
+
+\begin{lstlisting}
+# done lots of edits on dev branch called new2, happy to merge
+$ git checkout master
+$ git merge --squash --no-commit new2
+$ git commit -m $SUBSTANTIAL_CHANGE_INFO
+$ git push
+\end{lstlisting}
+
+\end{itemize}
+
 
 \section{Special issues}
 
@@ -409,6 +425,9 @@ $ git push origin master
 
 \section{Problems\&suggetions}
 Contact Yang Gao via yanggao1119@gmail.com.
+
+\section{Ackowledgements}
+Markus Dreyer, Jon May
 
 \section{References}
 

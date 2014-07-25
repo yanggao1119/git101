@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  24 JUL 2014 23:32
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  25 JUL 2014 00:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -411,31 +411,43 @@ Overfull \hbox (4.5191pt too wide) in paragraph at lines 220--221
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <10> not available
 (Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 246.
 [4] [5]
-Overfull \hbox (4.5191pt too wide) in paragraph at lines 403--404
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+Overfull \hbox (10.5188pt too wide) in paragraph at lines 370--371
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 417--418
+Overfull \hbox (4.5191pt too wide) in paragraph at lines 419--420
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 436--437
 []\OT1/ptm/m/n/10 http://readwrite.com/2013/09/30/understanding-github-a-journe
 y-for-beginners-part-
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 423.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 442.
 [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 423.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 442.
  (./ygao-git101_20140703.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 423.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 423.
-Package rerunfilecheck Info: File `ygao-git101_20140703.out' has not changed.
-(rerunfilecheck)             Checksum: F918EC837B6AD8D39D6EE0E527D20943;906.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 423.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 442.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 442.
+
+
+Package rerunfilecheck Warning: File `ygao-git101_20140703.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `ygao-git101_20140703.out':
+(rerunfilecheck)             Before: F918EC837B6AD8D39D6EE0E527D20943;906
+(rerunfilecheck)             After:  6FA794628E5FF080FF27AC084F55BD1D;958.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 442.
  ) 
 Here is how much of TeX's memory you used:
- 7691 strings out of 493315
- 111663 string characters out of 6137904
+ 7702 strings out of 493315
+ 111822 string characters out of 6137904
  241876 words of memory out of 5000000
- 10923 multiletter control sequences out of 15000+600000
+ 10926 multiletter control sequences out of 15000+600000
  19893 words of font info for 43 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  37i,8n,40p,711b,1721s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -447,10 +459,10 @@ live/2013/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/201
 dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/local/texlive/2013/texmf-dist/fo
 nts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/
 urw/times/utmr8a.pfb>
-Output written on ygao-git101_20140703.pdf (7 pages, 102523 bytes).
+Output written on ygao-git101_20140703.pdf (7 pages, 104404 bytes).
 PDF statistics:
- 265 PDF objects out of 1000 (max. 8388607)
- 246 compressed objects within 3 object streams
- 130 named destinations out of 1000 (max. 500000)
+ 275 PDF objects out of 1000 (max. 8388607)
+ 256 compressed objects within 3 object streams
+ 138 named destinations out of 1000 (max. 500000)
  121 words of extra memory for PDF output out of 10000 (max. 10000000)
 
