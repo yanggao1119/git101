@@ -7,8 +7,9 @@
 \BOOKMARK [1][-]{section.4}{Basic usage: set up local/remote repo w/o branching or forking}{}% 7
 \BOOKMARK [1][-]{section.5}{Managing branches}{}% 8
 \BOOKMARK [1][-]{section.6}{Using Git for collaboration: forking a repo}{}% 9
-\BOOKMARK [1][-]{section.7}{Special issues}{}% 10
-\BOOKMARK [2][-]{subsection.7.1}{Wildcard}{section.7}% 11
-\BOOKMARK [2][-]{subsection.7.2}{Protocol}{section.7}% 12
-\BOOKMARK [1][-]{section.8}{Problems\046suggetions}{}% 13
-\BOOKMARK [1][-]{section.9}{References}{}% 14
+\BOOKMARK [1][-]{section.7}{Using Git for close collaboration: multiple project admin}{}% 10
+\BOOKMARK [1][-]{section.8}{Special issues}{}% 11
+\BOOKMARK [2][-]{subsection.8.1}{Wildcard}{section.8}% 12
+\BOOKMARK [2][-]{subsection.8.2}{Protocol}{section.8}% 13
+\BOOKMARK [1][-]{section.9}{Problems\046suggetions}{}% 14
+\BOOKMARK [1][-]{section.10}{References}{}% 15

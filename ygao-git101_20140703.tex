@@ -300,6 +300,66 @@ This updates to yanggao1119's remote repo on GitHub server.
 
 \end{itemize}
 
+\section{Using Git for close collaboration: multiple project admin}
+
+Markus Dreyer reminds me that forking\&pull is too slow and complex for people that collaborate closely. Instead of forking repo, simple give \q{push and pull, and administrative access} to all members in the team. 
+
+Say, yanggao1119 and longwencan are in a team called \q{quickdev} in a project Muko2014. She would like to collaborate closely with longwencan on this repo: https://github.com/Muko2014/toy. So yanggao1119 just needs to go to https://github.com/Muko2014/toy/settings/collaboration by clicking \q{Settings} then \q{Collaborators}, and make sure that the team "quickdev" is added under "Teams".
+
+After this change, longwencan can do all things as yanggao1119 can. longwencan needs to first clone the repo to local dir, with this command:
+
+\begin{lstlisting}
+$ git clone https://github.com/Muko2014/toy.git
+\end{lstlisting}
+
+longwencan can commit and push directly to the origin/master just as yanggao1119 can. There is no need to send yanggao1119 a pull request.
+
+If yanggao1119 updated the repo, longwencan can fetch the origin to the local dir by:
+
+\begin{lstlisting}
+$ git fetch
+\end{lstlisting}
+
+or 
+
+\begin{lstlisting}
+$ git fetch origin
+\end{lstlisting}
+
+and then do a merge with origin/master by
+
+\begin{lstlisting}
+$ git merge origin/master
+\end{lstlisting}
+
+don't confuse with the \q{upstream} thing in the last section, which only makes sense in forking. Here the only remote repo is origin.
+
+In real scenario, both yanggao1119 and longwencan might have updated the repo. So after \q{git fetch}, instead of doing a \q{git merge}, longwencan may wan t to do a \q{git rebase} to rebase her own commits on top of the updated origin/master which then automatically attempts merging, as if they happen in that chronological order. Here is the command:
+
+\begin{lstlisting}
+$ git rebase origin/master
+\end{lstlisting}
+
+If this merge fails due to conflict, longwencan can resolve conflict in the file and then do 
+
+\begin{lstlisting}
+$ git add .
+\end{lstlisting}
+
+and 
+
+\begin{lstlisting}
+$ git rebase --continue
+\end{lstlisting}
+
+finally, longwencan needs to push to the remote repo by
+
+\begin{lstlisting}
+$ git push
+\end{lstlisting}
+
+so that yanggao1119 can see the update.
+
 
 \section{Special issues}
 
