@@ -185,7 +185,14 @@ $ git checkout experimental
 Notes:
 
 \begin{itemize}
-	\item \textbf{Before \q{git merge}, make sure the two branches to merge have both committed updates}.
+
+    \item During dev, you often need to checkout a new branch from master and switch to that branch. Here is a shortcut to do it in one command:
+
+\begin{lstlisting}
+$ git checkout -b new_branch 
+\end{lstlisting}
+
+	\item \textbf{When you are happy with the new branch, merge it back to master. Before \q{git merge}, make sure the two branches to merge have both committed updates}.
 
 	\item If two branches have changed the same part of the same file, there will be failure in automatic merging. Suppose you are at the master branch, you'd like to merge with the experimental branch but both branch edited the same line of \q{file1}:
 
@@ -199,6 +206,18 @@ Automatic merge failed; fix conflicts and then commit the result
 \textbf{You need to resolve the conflict since this is beyond git's understanding}. One way to do it is to open the file in conflict with your text editor and resolve the conflict manually. You will see conflict-marked area begins with \textless\textless\textless\textless\textless\textless\textless~and ends with~\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater. These are also known as the conflict markers. The two conflicting blocks themselves are divided by a =======. Just keep what you want, then commit to finish resolving the conflict. You don't need to do \q{git merge} again. 
 
 	\item \q{git merge} will only change the current branch, not the branch to be merged with. Therefore, if you are at the master branch, running \q{git merge experimental} will only update master.
+
+    \item After merging, you may want to delete the new branch. To delete your local branch:
+
+\begin{lstlisting}
+$ git branch -D new_branch
+\end{lstlisting}
+
+To delete remote branch:
+
+\begin{lstlisting}
+$ git push origin --delete new_branch
+\end{lstlisting}
 
 \end{itemize}
 
